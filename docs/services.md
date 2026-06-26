@@ -4,19 +4,27 @@
 
 ## Services
 
-GK Works, Inc. provides focused engineering support for small and mid-sized operations that need practical, maintainable business applications, mobile applications, embedded systems software, and legacy system modernization.
+GK Works, Inc. provides AI-first software consulting for organizations that need practical AI integrations, AI automations, AI-assisted legacy refactoring, and AI-enhanced business systems.
+
+## AI Integrations
+
+Integration of AI capabilities into existing business systems, internal tools, administrative workflows, customer operations, and data processing pipelines.
+
+## AI Automations
+
+Practical automations for repetitive business processes, assisted decisions, reporting, internal knowledge workflows, and human-in-the-loop operations.
 
 ## AI Engineering
 
-Practical AI-assisted refactoring, AI-enhanced feature development, data processing, internal knowledge tools, and human-in-the-loop automation for business operations.
+AI-assisted refactoring, AI-enhanced feature development, data processing, internal knowledge tools, and practical modernization of existing business software.
 
-## Custom Software Development
+## AI-Enhanced Application Development
 
-Design and implementation of web applications, mobile applications, order management workflows, administrative tools, reporting systems, and software tailored to business requirements.
+Design and implementation of AI-enhanced web applications, mobile applications, order management workflows, administrative tools, reporting systems, and software tailored to business requirements.
 
-## Mobile and Embedded Software
+## AI for Mobile and Embedded Software
 
-Development support for mobile applications, device-adjacent workflows, embedded software, and system interfaces that connect field operations with business systems.
+Development support for mobile applications, device-adjacent workflows, embedded software, and system interfaces that connect field operations with AI-enhanced business systems.
 
 ## Legacy System AI Refactor + Enhance
 
