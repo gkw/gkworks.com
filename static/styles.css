@@ -447,6 +447,83 @@ h3 {
   gap: 12px;
 }
 
+.impact-section p {
+  color: var(--muted);
+}
+
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.impact-card {
+  display: grid;
+  justify-items: start;
+  gap: 14px;
+  padding: 28px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.pie-chart {
+  --reduction: 50;
+  width: 132px;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, var(--white) 0 47%, transparent 48%),
+    conic-gradient(var(--orange) calc(var(--reduction) * 1%), #e7edf2 0);
+  border: 1px solid var(--line);
+}
+
+.pie-chart span {
+  color: #111827;
+  font-size: 1.45rem;
+  font-weight: 820;
+}
+
+.impact-card h3 {
+  margin-bottom: 0;
+}
+
+.impact-card p {
+  margin-bottom: 0;
+}
+
+.impact-card dl {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  margin: 0;
+}
+
+.impact-card dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.impact-card dt,
+.impact-card dd {
+  margin: 0;
+}
+
+.impact-card dt {
+  color: var(--muted);
+}
+
+.impact-card dd {
+  color: #111827;
+  font-weight: 800;
+}
+
 .technology-grid span {
   display: inline-flex;
   align-items: center;
@@ -616,6 +693,7 @@ h3 {
   .trust-band,
   .service-grid,
   .split-section,
+  .impact-grid,
   .document-grid,
   .contact-section {
     grid-template-columns: 1fr;
