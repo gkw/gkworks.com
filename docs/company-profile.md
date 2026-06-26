@@ -4,16 +4,16 @@
 
 ## Overview
 
-GK Works, Inc. provides AI-first software consulting for AI integrations, AI automations, AI Engineering, AI-assisted legacy system refactoring, AI-enhanced business applications, mobile application development, embedded systems software, systems integration, and technical support from the San Francisco Bay Area.
+GK Works, Inc. provides AI-first software consulting for AI integrations, AI automations, Security Consulting, AI Engineering, AI-assisted legacy system refactoring, AI-enhanced business applications, mobile application development, embedded systems software, systems integration, and technical support from the San Francisco Bay Area.
 
-The company supports business operations through AI integrations, AI automations, AI-enhanced web applications, mobile applications, embedded and device-adjacent software, administrative tools, order management workflows, internal knowledge workflows, and practical modernization of existing legacy systems.
+The company supports business operations through AI integrations, AI automations, Security Consulting, AI-enhanced web applications, mobile applications, embedded and device-adjacent software, administrative tools, order management workflows, internal knowledge workflows, and practical modernization of existing legacy systems.
 
 ## Company Information
 
 | Item | Details |
 | --- | --- |
 | Company Name | GK Works, Inc. |
-| Business | AI-first software consulting, AI integrations, AI automations, AI Engineering, AI-assisted legacy system refactoring, AI-enhanced business applications, mobile application development, embedded systems software, systems integration, and technical support |
+| Business | AI-first software consulting, AI integrations, AI automations, Security Consulting, AI Engineering, AI-assisted legacy system refactoring, AI-enhanced business applications, mobile application development, embedded systems software, systems integration, and technical support |
 | Service Area | United States and international clients |
 | Location | San Francisco Bay Area, California, USA |
 | Company Location | ![Company location](../assets/location.png) |
@@ -23,6 +23,7 @@ The company supports business operations through AI integrations, AI automations
 
 - AI integrations for business systems
 - AI automations for operational workflows
+- Security Consulting for applications, AI workflows, access control, and operational risk
 - AI-assisted legacy system refactoring and enhancement
 - AI-enhanced business application development
 - AI-enhanced mobile application workflows

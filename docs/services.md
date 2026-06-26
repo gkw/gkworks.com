@@ -4,7 +4,7 @@
 
 ## Services
 
-GK Works, Inc. provides AI-first software consulting for organizations that need practical AI integrations, AI automations, AI-assisted legacy refactoring, and AI-enhanced business systems.
+GK Works, Inc. provides AI-first software consulting for organizations that need practical AI integrations, AI automations, Security Consulting, AI-assisted legacy refactoring, and AI-enhanced business systems.
 
 ## AI Integrations
 
@@ -13,6 +13,10 @@ Integration of AI capabilities into existing business systems, internal tools, a
 ## AI Automations
 
 Practical automations for repetitive business processes, assisted decisions, reporting, internal knowledge workflows, and human-in-the-loop operations.
+
+## Security Consulting
+
+Practical security review and advisory support for AI integrations, automation workflows, application architecture, access control, and operational risk.
 
 ## AI Engineering
 
