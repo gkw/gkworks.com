@@ -1,0 +1,15 @@
+services:
+  gkworks:
+    build: .
+    image: gkworks-site:latest
+    ports:
+      - "8099:8099"
+    environment:
+      FLASK_SECRET_KEY: "change-this-secret"
+      CONTACT_SUBMISSIONS_PATH: "/app/instance/contact_submissions.jsonl"
+    volumes:
+      - gkworks_instance:/app/instance
+    restart: unless-stopped
+
+volumes:
+  gkworks_instance:

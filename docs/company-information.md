@@ -4,7 +4,7 @@
 
 ## Company Overview
 
-GK Works, Inc., California Corporation, provides AI-first software consulting for AI integrations, AI automations, Security Consulting, System Architecture Solutions, scalable Linux server architecture, secure local LLM deployments, AI Engineering, AI-assisted legacy system refactoring, AI-enhanced business applications, mobile application development, embedded systems software, systems integration, and technical support from the San Francisco Bay Area.
+GK Works, Inc., California Corporation since 2012, provides AI-first software consulting for AI integrations, AI automations, Security Consulting, System Architecture Solutions, scalable Linux server architecture, secure local LLM deployments, AI Engineering, AI-assisted legacy system refactoring, AI-enhanced business applications, mobile application development, embedded systems software, systems integration, and technical support from the San Francisco Bay Area.
 
 The company supports business operations through AI integrations, AI automations, Security Consulting, scalable Linux server environments, secure local LLM deployments, AI-enhanced web applications, mobile applications, embedded and device-adjacent software, administrative tools, order management workflows, internal knowledge workflows, and practical modernization of existing legacy systems.
 
@@ -39,7 +39,7 @@ The company supports business operations through AI integrations, AI automations
 | Item | Details |
 | --- | --- |
 | Company Name | GK Works, Inc. |
-| Legal Form | California Corporation |
+| Legal Form | California Corporation since 2012 |
 | Business | AI-first software consulting, AI integrations, AI automations, Security Consulting, System Architecture Solutions, scalable Linux server architecture, secure local LLM deployments, AI Engineering, AI-assisted legacy system refactoring, AI-enhanced business applications, mobile application development, embedded systems software, systems integration, and technical support |
 | Service Area | United States and international clients |
 | Location | San Francisco Bay Area, California, USA |
