@@ -16,6 +16,9 @@ echo
 read -rsp "Confirm Google App Password: " app_password_confirm
 echo
 
+app_password="${app_password//[[:space:]]/}"
+app_password_confirm="${app_password_confirm//[[:space:]]/}"
+
 if [[ -z "${app_password}" ]]; then
   echo "App Password cannot be empty." >&2
   exit 1
@@ -24,6 +27,15 @@ fi
 if [[ "${app_password}" != "${app_password_confirm}" ]]; then
   echo "Passwords did not match." >&2
   exit 1
+fi
+
+if [[ "${#app_password}" != "16" ]]; then
+  echo "Warning: Google App Passwords are usually 16 characters after removing spaces." >&2
+  echo "Current length: ${#app_password}" >&2
+  read -rp "Continue anyway? [y/N] " continue_anyway
+  if [[ "${continue_anyway}" != "y" && "${continue_anyway}" != "Y" ]]; then
+    exit 1
+  fi
 fi
 
 umask 077
