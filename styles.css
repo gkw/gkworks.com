@@ -247,6 +247,41 @@ h3 {
   font-size: 0.95rem;
 }
 
+.heritage-section {
+  position: relative;
+  width: min(1120px, calc(100% - 40px));
+  min-height: 280px;
+  margin: 54px auto 0;
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.94) 0%, rgba(255, 255, 255, 0.8) 47%, rgba(255, 255, 255, 0.16) 100%),
+    url("assets/original-site-background.jpg") center / cover no-repeat;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.heritage-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-top: 4px solid var(--orange);
+  pointer-events: none;
+}
+
+.heritage-content {
+  position: relative;
+  max-width: 590px;
+  padding: 42px;
+}
+
+.heritage-content p:last-child {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
 .section {
   width: min(1120px, calc(100% - 40px));
   margin: 0 auto;
@@ -495,6 +530,12 @@ h3 {
     border-left: 0;
   }
 
+  .heritage-section {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.82) 100%),
+      url("assets/original-site-background.jpg") center / cover no-repeat;
+  }
+
   .profile-list div {
     grid-template-columns: 1fr;
   }
@@ -529,6 +570,7 @@ h3 {
 
   .service-card,
   .trust-band div,
+  .heritage-content,
   .document-link,
   .contact-section {
     padding: 24px;
