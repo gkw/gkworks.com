@@ -37,14 +37,24 @@ By default, contact notifications are addressed to:
 gen@gkworks.com
 ```
 
-The server still stores every submission in JSONL as a backup. For reliable delivery to a hosted mailbox such as Zoho, configure authenticated SMTP with these environment variables:
+The server still stores every submission in JSONL as a backup. For reliable delivery through Gmail, use a Google App Password and configure authenticated SMTP with these environment variables:
 
 ```text
 CONTACT_NOTIFY_EMAIL=gen@gkworks.com
-CONTACT_FROM_EMAIL=gen@gkworks.com
-SMTP_HOST=smtp.zoho.com
+CONTACT_FROM_EMAIL=<gmail-address>
+SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USE_TLS=1
-SMTP_USERNAME=gen@gkworks.com
-SMTP_PASSWORD=<app-password>
+SMTP_USERNAME=<gmail-address>
+SMTP_PASSWORD=<google-app-password>
+```
+
+The PHP compatibility deployment on `gkworks.com` reads SMTP settings from `/etc/gkworks-contact-mail.ini`:
+
+```ini
+smtp_host=smtp.gmail.com
+smtp_port=587
+smtp_username=<gmail-address>
+smtp_password=<google-app-password>
+smtp_from=<gmail-address>
 ```
