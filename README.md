@@ -30,3 +30,21 @@ Contact form submissions are stored at:
 ```
 
 When using Docker Compose, that path is backed by the `gkworks_instance` volume.
+
+By default, contact notifications are addressed to:
+
+```text
+gen@gkworks.com
+```
+
+The server still stores every submission in JSONL as a backup. For reliable delivery to a hosted mailbox such as Zoho, configure authenticated SMTP with these environment variables:
+
+```text
+CONTACT_NOTIFY_EMAIL=gen@gkworks.com
+CONTACT_FROM_EMAIL=gen@gkworks.com
+SMTP_HOST=smtp.zoho.com
+SMTP_PORT=587
+SMTP_USE_TLS=1
+SMTP_USERNAME=gen@gkworks.com
+SMTP_PASSWORD=<app-password>
+```

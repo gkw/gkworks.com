@@ -7,6 +7,8 @@ services:
     environment:
       FLASK_SECRET_KEY: "change-this-secret"
       CONTACT_SUBMISSIONS_PATH: "/app/instance/contact_submissions.jsonl"
+      CONTACT_NOTIFY_EMAIL: "gen@gkworks.com"
+      CONTACT_FROM_EMAIL: "gen@gkworks.com"
     volumes:
       - gkworks_instance:/app/instance
     restart: unless-stopped
