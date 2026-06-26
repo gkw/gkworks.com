@@ -4,7 +4,7 @@
 
 ## Services
 
-GK Works, Inc. provides focused engineering support for small and mid-sized operations that need practical, maintainable business applications and legacy system modernization.
+GK Works, Inc. provides focused engineering support for small and mid-sized operations that need practical, maintainable business applications, mobile applications, embedded systems software, and legacy system modernization.
 
 ## AI Engineering
 
@@ -12,7 +12,11 @@ Practical AI-assisted refactoring, AI-enhanced feature development, data process
 
 ## Custom Software Development
 
-Design and implementation of web applications, order management workflows, administrative tools, reporting systems, and software tailored to business requirements.
+Design and implementation of web applications, mobile applications, order management workflows, administrative tools, reporting systems, and software tailored to business requirements.
+
+## Mobile and Embedded Software
+
+Development support for mobile applications, device-adjacent workflows, embedded software, and system interfaces that connect field operations with business systems.
 
 ## Legacy System AI Refactor + Enhance
 
