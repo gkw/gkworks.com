@@ -49,8 +49,9 @@ smtp_from=${gmail_address}
 INI
 
 mv "${tmp_path}" "${config_path}"
-chown root:root "${config_path}"
-chmod 600 "${config_path}"
+chown root:www-data "${config_path}"
+chmod 640 "${config_path}"
 
 echo "Wrote ${config_path}"
 php -r 'echo is_readable("/etc/gkworks-contact-mail.ini") ? "config-readable\n" : "config-not-readable\n";'
+sudo -u www-data php -r 'echo is_readable("/etc/gkworks-contact-mail.ini") ? "www-data-readable\n" : "www-data-not-readable\n";'
