@@ -113,7 +113,7 @@ a {
 
 .hero {
   position: relative;
-  min-height: clamp(560px, 78vh, 720px);
+  min-height: clamp(620px, 82vh, 760px);
   display: grid;
   align-items: center;
   overflow: hidden;
@@ -142,7 +142,7 @@ a {
   position: relative;
   width: min(720px, calc(100% - 40px));
   margin-left: clamp(20px, 6vw, 86px);
-  padding: 56px 0 78px;
+  padding: 96px 0 128px;
 }
 
 .eyebrow {
@@ -164,8 +164,8 @@ p {
 h1 {
   max-width: 680px;
   margin-bottom: 22px;
-  font-size: clamp(2.5rem, 5.3vw, 4.25rem);
-  line-height: 1.03;
+  font-size: clamp(2.5rem, 4.8vw, 3.9rem);
+  line-height: 1.05;
   letter-spacing: 0;
 }
 
@@ -224,7 +224,7 @@ h3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   width: min(1120px, calc(100% - 40px));
-  margin: -84px auto 0;
+  margin: 36px auto 0;
   background: var(--white);
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -676,7 +676,7 @@ h3 {
   }
 
   .hero {
-    min-height: 700px;
+    min-height: 720px;
   }
 
   .hero-overlay {
@@ -687,7 +687,7 @@ h3 {
 
   .hero-content {
     margin: 0 auto;
-    padding-top: 64px;
+    padding: 72px 0 96px;
   }
 
   .trust-band,
@@ -732,10 +732,6 @@ h3 {
   .hero-actions,
   .button {
     width: 100%;
-  }
-
-  .trust-band {
-    margin-top: -54px;
   }
 
   .section {
