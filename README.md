@@ -58,3 +58,9 @@ smtp_username=<gmail-address>
 smtp_password=<google-app-password>
 smtp_from=<gmail-address>
 ```
+
+The helper script can be uploaded to the production server and run as root:
+
+```bash
+/root/setup-gmail-smtp.sh genkikuroda@gmail.com
+```
