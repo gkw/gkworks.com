@@ -93,3 +93,28 @@ The endpoint sends notification email through the Gmail SMTP settings in `/etc/g
 ```text
 /var/www/html/instance/contact_api_notifications.jsonl
 ```
+
+## API Management
+
+Protected API catalog and runtime checks are available at:
+
+```text
+GET /api/management.php
+Authorization: Bearer <notify_api_token>
+```
+
+Registered APIs are listed in:
+
+```text
+api/api-catalog.php
+```
+
+Use the helper on the production server:
+
+```bash
+/root/api-management.sh list
+/root/api-management.sh logs
+/root/api-management.sh test-notification
+```
+
+When adding APIs for Cloudflare Workers, add the endpoint implementation under `api/`, add a catalog entry in `api/api-catalog.php`, and use the shared helpers in `api/lib/api-common.php`.
