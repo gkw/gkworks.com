@@ -64,3 +64,32 @@ The helper script can be uploaded to the production server and run as root:
 ```bash
 /root/setup-gmail-smtp.sh genkikuroda@gmail.com
 ```
+
+## HTTP Email Notification API
+
+The production PHP compatibility deployment includes an authenticated HTTP endpoint for future Cloudflare Worker contact-form submissions:
+
+```text
+POST /api/contact-notification.php
+Authorization: Bearer <notify_api_token>
+Content-Type: application/json
+```
+
+Example payload:
+
+```json
+{
+  "name": "Example Sender",
+  "company": "Example Company",
+  "email": "sender@example.com",
+  "subject": "Website inquiry",
+  "message": "Hello from the contact form",
+  "source": "cloudflare-worker"
+}
+```
+
+The endpoint sends notification email through the Gmail SMTP settings in `/etc/gkworks-contact-mail.ini` and stores backup records in:
+
+```text
+/var/www/html/instance/contact_api_notifications.jsonl
+```

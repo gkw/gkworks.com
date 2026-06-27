@@ -3,6 +3,7 @@ set -euo pipefail
 
 config_path="/etc/gkworks-contact-mail.ini"
 gmail_address="${1:-genkikuroda@gmail.com}"
+notify_to="${CONTACT_NOTIFY_EMAIL:-gen@gkworks.com}"
 
 if [[ "$(id -u)" != "0" ]]; then
   echo "Run this script as root." >&2
@@ -40,12 +41,25 @@ fi
 
 umask 077
 tmp_path="$(mktemp)"
+existing_token=""
+if [[ -r "${config_path}" ]]; then
+  existing_token="$(php -r '$c=parse_ini_file($argv[1]); echo $c["notify_api_token"] ?? "";' "${config_path}")"
+fi
+
+if [[ -n "${existing_token}" ]]; then
+  notify_api_token="${existing_token}"
+else
+  notify_api_token="$(php -r 'echo bin2hex(random_bytes(32));')"
+fi
+
 cat > "${tmp_path}" <<INI
 smtp_host=smtp.gmail.com
 smtp_port=587
 smtp_username=${gmail_address}
 smtp_password=${app_password}
 smtp_from=${gmail_address}
+notify_to=${notify_to}
+notify_api_token=${notify_api_token}
 INI
 
 mv "${tmp_path}" "${config_path}"

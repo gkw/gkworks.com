@@ -44,12 +44,15 @@ The website is prepared for external business review, including Japanese banking
 - Production PHP compatibility path: `/var/www/html/instance/contact_submissions.jsonl`.
 - Production email notifications are sent through Gmail SMTP when `/etc/gkworks-contact-mail.ini` is present and readable by the web server user.
 - Gmail SMTP credentials must be configured with a Google App Password, not a regular Google account password.
+- Future Cloudflare Worker contact forms can call `POST /api/contact-notification.php` with a Bearer token.
+- The notification API sends through Gmail SMTP and stores backup records in `/var/www/html/instance/contact_api_notifications.jsonl`.
 
 ## Production Notes
 
 - The live server currently uses a PHP compatibility deployment under `/var/www/html`.
 - The repository keeps the Flask/Docker implementation as the maintainable application source.
 - The helper script `scripts/setup-gmail-smtp.sh` configures `/etc/gkworks-contact-mail.ini` on the production server.
+- The same config file also stores `notify_to` and `notify_api_token` for the authenticated notification API.
 - SMTP config ownership should allow the web runtime to read it while keeping it private:
 
 ```text
