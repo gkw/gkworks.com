@@ -48,6 +48,7 @@ The website is prepared for external business review, including Japanese banking
 - The notification API sends through Gmail SMTP and stores backup records in `/var/www/html/instance/contact_api_notifications.jsonl`.
 - API management is available through `GET /api/management.php` with the same Bearer token.
 - New Cloudflare Worker support APIs should be registered in `api/api-catalog.php` and should reuse `api/lib/api-common.php`.
+- The Docker/Flask deployment mirrors the same API paths for local and container verification.
 
 ## Production Notes
 

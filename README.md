@@ -29,6 +29,12 @@ Contact form submissions are stored at:
 /app/instance/contact_submissions.jsonl
 ```
 
+Cloudflare Worker style API notification submissions are stored at:
+
+```text
+/app/instance/contact_api_notifications.jsonl
+```
+
 When using Docker Compose, that path is backed by the `gkworks_instance` volume.
 
 By default, contact notifications are addressed to:
@@ -42,6 +48,7 @@ The server still stores every submission in JSONL as a backup. For reliable deli
 ```text
 CONTACT_NOTIFY_EMAIL=gen@gkworks.com
 CONTACT_FROM_EMAIL=<gmail-address>
+CONTACT_NOTIFY_API_TOKEN=<strong-shared-token>
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USE_TLS=1
@@ -94,6 +101,15 @@ The endpoint sends notification email through the Gmail SMTP settings in `/etc/g
 /var/www/html/instance/contact_api_notifications.jsonl
 ```
 
+The Docker/Flask deployment exposes the same endpoint path and uses `CONTACT_NOTIFY_API_TOKEN` for the Bearer token:
+
+```bash
+curl -sS -X POST http://127.0.0.1:8099/api/contact-notification.php \
+  -H "Authorization: Bearer dev-change-me" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Docker Test","email":"docker@example.com","message":"Hello","source":"docker"}'
+```
+
 ## API Management
 
 Protected API catalog and runtime checks are available at:
@@ -118,3 +134,10 @@ Use the helper on the production server:
 ```
 
 When adding APIs for Cloudflare Workers, add the endpoint implementation under `api/`, add a catalog entry in `api/api-catalog.php`, and use the shared helpers in `api/lib/api-common.php`.
+
+The Docker/Flask deployment also exposes the same management path:
+
+```bash
+curl -sS http://127.0.0.1:8099/api/management.php \
+  -H "Authorization: Bearer dev-change-me"
+```
