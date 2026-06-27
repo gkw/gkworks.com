@@ -2,6 +2,16 @@
 
 Flask website for GK Works, Inc., California Corporation since 2012.
 
+## Cloudflare Worker Branch
+
+Cloudflare Workers development lives in:
+
+```text
+worker/
+```
+
+That version serves static assets from `worker/public`, handles the public contact form at `/contact`, and forwards notifications to the protected HTTP notification API backed by Gmail SMTP.
+
 ## Run With Docker
 
 Build and run directly:

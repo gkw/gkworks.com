@@ -1,0 +1,45 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "gkworks-site",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-06-27",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "API_STATE",
+        "class_name": "ApiState"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["ApiState"]
+    }
+  ],
+  "vars": {
+    "NOTIFICATION_API_URL": "https://gkworks.com/api/contact-notification.php"
+  },
+  // Create a KV namespace and set the id before production deploy:
+  // "kv_namespaces": [
+  //   { "binding": "CONTACT_SUBMISSIONS", "id": "<KV_NAMESPACE_ID>" }
+  // ],
+  "routes": [
+    {
+      "pattern": "gkworks.com",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.gkworks.com",
+      "custom_domain": true
+    }
+  ]
+}

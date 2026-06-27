@@ -49,6 +49,8 @@ The website is prepared for external business review, including Japanese banking
 - API management is available through `GET /api/management.php` with the same Bearer token.
 - New Cloudflare Worker support APIs should be registered in `api/api-catalog.php` and should reuse `api/lib/api-common.php`.
 - The Docker/Flask deployment mirrors the same API paths for local and container verification.
+- Cloudflare Workers development is isolated under `worker/` on the `cloudflare-worker-site` branch.
+- The Worker uses the `ApiState` Durable Object with monthly shards such as `contacts-YYYY-MM` for ordered contact/API state.
 
 ## Production Notes
 

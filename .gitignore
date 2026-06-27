@@ -2,3 +2,6 @@ __pycache__/
 .venv/
 instance/
 .DS_Store
+worker/.dev.vars
+worker/node_modules/
+worker/.wrangler/
