@@ -7,7 +7,8 @@
     "dev": "wrangler dev --port 8787",
     "deploy": "wrangler deploy",
     "dry-run": "wrangler deploy --dry-run",
-    "check": "wrangler check",
+    "check": "tsc --noEmit",
+    "check:deploy": "wrangler deploy --dry-run",
     "types": "wrangler types"
   },
   "devDependencies": {

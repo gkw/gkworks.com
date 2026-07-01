@@ -41,20 +41,21 @@ The website is prepared for external business review, including Japanese banking
 
 - Contact submissions are saved as JSON Lines for operational backup.
 - Flask/Docker path: `/app/instance/contact_submissions.jsonl`.
-- Production PHP compatibility path: `/var/www/html/instance/contact_submissions.jsonl`.
+- Production Python API backup path: `/var/www/html/instance/contact_submissions.jsonl` or the Docker-mounted `/app/instance/contact_submissions.jsonl`.
 - Production email notifications are sent through Gmail SMTP when `/etc/gkworks-contact-mail.ini` is present and readable by the web server user.
 - Gmail SMTP credentials must be configured with a Google App Password, not a regular Google account password.
-- Future Cloudflare Worker contact forms can call `POST /api/contact-notification.php` with a Bearer token.
+- Cloudflare Worker contact forms call `POST /api/contact-notification` with a Bearer token.
 - The notification API sends through Gmail SMTP and stores backup records in `/var/www/html/instance/contact_api_notifications.jsonl`.
-- API management is available through `GET /api/management.php` with the same Bearer token.
-- New Cloudflare Worker support APIs should be registered in `api/api-catalog.php` and should reuse `api/lib/api-common.php`.
-- The Docker/Flask deployment mirrors the same API paths for local and container verification.
+- API management is available through `GET /api/management` with the same Bearer token.
+- New Cloudflare Worker support APIs should be registered in the Python `API_CATALOG` in `app.py` and the Worker `API_CATALOG` in `worker/src/index.ts`.
+- `.php` paths are legacy aliases only and should not be used for new Worker configuration.
+- The Docker/Flask deployment mirrors the same API behavior for local and container verification.
 - Cloudflare Workers development is isolated under `worker/` on the `cloudflare-worker-site` branch.
 - The Worker uses the `ApiState` Durable Object with monthly shards such as `contacts-YYYY-MM` for ordered contact/API state.
 
 ## Production Notes
 
-- The live server currently uses a PHP compatibility deployment under `/var/www/html`.
+- The live server should move to the Python API deployment; the old PHP files are retained only as temporary compatibility fallback.
 - The repository keeps the Flask/Docker implementation as the maintainable application source.
 - The helper script `scripts/setup-gmail-smtp.sh` configures `/etc/gkworks-contact-mail.ini` on the production server.
 - The same config file also stores `notify_to` and `notify_api_token` for the authenticated notification API.

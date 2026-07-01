@@ -46,11 +46,20 @@ The Worker mirrors the current production API paths:
 
 ```text
 POST /contact
+POST /api/contact-notification
+GET /api/health
+GET /api/catalog
+GET /api/management
+```
+
+The public contact form posts to `/contact`. The Worker forwards notifications to the protected Python API endpoint configured by `NOTIFICATION_API_URL`.
+
+Temporary compatibility aliases:
+
+```text
 POST /api/contact-notification.php
 GET /api/management.php
 ```
-
-The public contact form posts to `/contact`. The Worker forwards notifications to the protected VPS endpoint configured by `NOTIFICATION_API_URL`.
 
 ## Durable Objects
 
@@ -86,7 +95,7 @@ npm run deploy
 This lets the Worker use the existing VPS notification API through the API hostname while the main website remains on the current hosting:
 
 ```text
-NOTIFICATION_API_URL=https://api.gkworks.com/api/contact-notification.php
+NOTIFICATION_API_URL=https://api.gkworks.com/api/contact-notification
 ```
 
 Only uncomment the `routes` entries in `wrangler.jsonc` when ready to move public traffic for `gkworks.com` to Cloudflare Workers.

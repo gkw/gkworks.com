@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import os
 import smtplib
+import configparser
 from datetime import datetime, timezone
 from email.message import EmailMessage
 from pathlib import Path
@@ -14,25 +15,48 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-secret-change-in-production")
 
 BASE_DIR = Path(__file__).resolve().parent
+SERVER_MAIL_CONFIG_PATH = Path(os.environ.get("GKWORKS_MAIL_CONFIG_PATH", "/etc/gkworks-contact-mail.ini"))
 SUBMISSIONS_PATH = Path(os.environ.get("CONTACT_SUBMISSIONS_PATH", BASE_DIR / "instance" / "contact_submissions.jsonl"))
 API_NOTIFICATIONS_PATH = Path(
     os.environ.get("CONTACT_API_NOTIFICATIONS_PATH", BASE_DIR / "instance" / "contact_api_notifications.jsonl")
 )
-CONTACT_NOTIFY_EMAIL = os.environ.get("CONTACT_NOTIFY_EMAIL", "gen@gkworks.com")
-CONTACT_FROM_EMAIL = os.environ.get("CONTACT_FROM_EMAIL", "gen@gkworks.com")
-CONTACT_NOTIFY_API_TOKEN = os.environ.get("CONTACT_NOTIFY_API_TOKEN", "")
-SMTP_HOST = os.environ.get("SMTP_HOST", "localhost")
-SMTP_PORT = int(os.environ.get("SMTP_PORT", "25"))
-SMTP_USERNAME = os.environ.get("SMTP_USERNAME", "")
-SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD", "")
-SMTP_USE_TLS = os.environ.get("SMTP_USE_TLS", "0") == "1"
+
+
+def read_server_mail_config() -> dict[str, str]:
+    if not SERVER_MAIL_CONFIG_PATH.exists():
+        return {}
+
+    parser = configparser.ConfigParser()
+    try:
+        raw = SERVER_MAIL_CONFIG_PATH.read_text(encoding="utf-8")
+        parser.read_string("[mail]\n" + raw)
+    except OSError:
+        return {}
+    return dict(parser["mail"])
+
+
+SERVER_MAIL_CONFIG = read_server_mail_config()
+
+
+def config_value(env_name: str, ini_name: str, default: str = "") -> str:
+    return os.environ.get(env_name) or SERVER_MAIL_CONFIG.get(ini_name, default)
+
+
+CONTACT_NOTIFY_EMAIL = config_value("CONTACT_NOTIFY_EMAIL", "notify_to", "gen@gkworks.com")
+CONTACT_FROM_EMAIL = config_value("CONTACT_FROM_EMAIL", "smtp_from", "gen@gkworks.com")
+CONTACT_NOTIFY_API_TOKEN = config_value("CONTACT_NOTIFY_API_TOKEN", "notify_api_token")
+SMTP_HOST = config_value("SMTP_HOST", "smtp_host", "localhost")
+SMTP_PORT = int(config_value("SMTP_PORT", "smtp_port", "25"))
+SMTP_USERNAME = config_value("SMTP_USERNAME", "smtp_username")
+SMTP_PASSWORD = config_value("SMTP_PASSWORD", "smtp_password")
+SMTP_USE_TLS = config_value("SMTP_USE_TLS", "smtp_use_tls", "1" if SMTP_PORT == 587 else "0") == "1"
 
 API_CATALOG = [
     {
         "id": "contact-notification",
         "name": "Contact Notification API",
         "method": "POST",
-        "path": "/api/contact-notification.php",
+        "path": "/api/contact-notification",
         "auth": "Bearer notify_api_token",
         "status": "active",
         "consumer": "Cloudflare Worker contact form",
@@ -40,12 +64,13 @@ API_CATALOG = [
         "backup_log": "/app/instance/contact_api_notifications.jsonl",
         "required_fields": ["name", "email", "message"],
         "optional_fields": ["company", "subject", "source"],
+        "aliases": ["/api/contact-notification.php"],
     },
     {
         "id": "api-management",
         "name": "API Management API",
         "method": "GET",
-        "path": "/api/management.php",
+        "path": "/api/management",
         "auth": "Bearer notify_api_token",
         "status": "active",
         "consumer": "Operations and deployment checks",
@@ -53,6 +78,33 @@ API_CATALOG = [
         "backup_log": None,
         "required_fields": [],
         "optional_fields": ["include_logs"],
+        "aliases": ["/api/management.php"],
+    },
+    {
+        "id": "api-catalog",
+        "name": "API Catalog",
+        "method": "GET",
+        "path": "/api/catalog",
+        "auth": "public metadata",
+        "status": "active",
+        "consumer": "API management tooling",
+        "description": "Returns public API metadata without operational logs or secrets.",
+        "backup_log": None,
+        "required_fields": [],
+        "optional_fields": [],
+    },
+    {
+        "id": "api-health",
+        "name": "API Health",
+        "method": "GET",
+        "path": "/api/health",
+        "auth": "public status",
+        "status": "active",
+        "consumer": "Monitoring and deployment checks",
+        "description": "Returns non-sensitive runtime health for the Python API backend.",
+        "backup_log": None,
+        "required_fields": [],
+        "optional_fields": [],
     },
 ]
 
@@ -188,6 +240,7 @@ def docs(filename: str):
     return send_from_directory(BASE_DIR / "docs", filename, mimetype="text/markdown")
 
 
+@app.post("/api/contact-notification")
 @app.post("/api/contact-notification.php")
 def contact_notification_api():
     if not api_authorized():
@@ -220,6 +273,40 @@ def contact_notification_api():
     return jsonify(ok=True)
 
 
+@app.get("/api/health")
+def api_health():
+    return jsonify(
+        ok=True,
+        service="gkworks-python-api",
+        generated_at=datetime.now(timezone.utc).isoformat(),
+        checks={
+            "config_readable": True,
+            "server_mail_config_readable": SERVER_MAIL_CONFIG_PATH.exists(),
+            "smtp_host_configured": bool(SMTP_HOST),
+            "notify_to_configured": bool(CONTACT_NOTIFY_EMAIL),
+            "notify_api_token_configured": bool(CONTACT_NOTIFY_API_TOKEN),
+            "contact_api_log_exists": API_NOTIFICATIONS_PATH.exists(),
+        },
+    )
+
+
+@app.get("/api/catalog")
+def api_catalog():
+    public_catalog = []
+    for api in API_CATALOG:
+        item = dict(api)
+        if "Bearer" in item.get("auth", ""):
+            item["auth"] = "protected"
+        public_catalog.append(item)
+    return jsonify(
+        ok=True,
+        service="gkworks-api-catalog",
+        generated_at=datetime.now(timezone.utc).isoformat(),
+        apis=public_catalog,
+    )
+
+
+@app.get("/api/management")
 @app.get("/api/management.php")
 def api_management():
     if not api_authorized():
@@ -227,6 +314,7 @@ def api_management():
 
     checks = {
         "config_readable": True,
+        "server_mail_config_readable": SERVER_MAIL_CONFIG_PATH.exists(),
         "smtp_host_configured": bool(SMTP_HOST),
         "smtp_username_configured": bool(SMTP_USERNAME),
         "smtp_password_configured": bool(SMTP_PASSWORD),

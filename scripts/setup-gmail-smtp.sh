@@ -43,13 +43,13 @@ umask 077
 tmp_path="$(mktemp)"
 existing_token=""
 if [[ -r "${config_path}" ]]; then
-  existing_token="$(php -r '$c=parse_ini_file($argv[1]); echo $c["notify_api_token"] ?? "";' "${config_path}")"
+  existing_token="$(python3 -c 'import configparser, sys; c=configparser.ConfigParser(); c.read_string("[mail]\\n" + open(sys.argv[1], encoding="utf-8").read()); print(c["mail"].get("notify_api_token", ""))' "${config_path}")"
 fi
 
 if [[ -n "${existing_token}" ]]; then
   notify_api_token="${existing_token}"
 else
-  notify_api_token="$(php -r 'echo bin2hex(random_bytes(32));')"
+  notify_api_token="$(python3 -c 'import secrets; print(secrets.token_hex(32))')"
 fi
 
 cat > "${tmp_path}" <<INI
@@ -67,5 +67,5 @@ chown root:www-data "${config_path}"
 chmod 640 "${config_path}"
 
 echo "Wrote ${config_path}"
-php -r 'echo is_readable("/etc/gkworks-contact-mail.ini") ? "config-readable\n" : "config-not-readable\n";'
-sudo -u www-data php -r 'echo is_readable("/etc/gkworks-contact-mail.ini") ? "www-data-readable\n" : "www-data-not-readable\n";'
+python3 -c 'import os; print("config-readable" if os.access("/etc/gkworks-contact-mail.ini", os.R_OK) else "config-not-readable")'
+sudo -u www-data python3 -c 'import os; print("www-data-readable" if os.access("/etc/gkworks-contact-mail.ini", os.R_OK) else "www-data-not-readable")'

@@ -11,7 +11,7 @@ if [[ "${GKWORKS_API_INSECURE:-0}" == "1" ]]; then
 fi
 
 if [[ -z "${token}" && -r /etc/gkworks-contact-mail.ini ]]; then
-  token="$(php -r '$c=parse_ini_file("/etc/gkworks-contact-mail.ini"); echo $c["notify_api_token"] ?? "";')"
+  token="$(python3 -c 'import configparser; c=configparser.ConfigParser(); c.read_string("[mail]\\n" + open("/etc/gkworks-contact-mail.ini", encoding="utf-8").read()); print(c["mail"].get("notify_api_token", ""))')"
 fi
 
 if [[ -z "${token}" ]]; then
@@ -23,13 +23,13 @@ case "${command}" in
   list)
     curl "${curl_opts[@]}" \
       -H "Authorization: Bearer ${token}" \
-      "${base_url}/api/management.php"
+      "${base_url}/api/management"
     echo
     ;;
   logs)
     curl "${curl_opts[@]}" \
       -H "Authorization: Bearer ${token}" \
-      "${base_url}/api/management.php?include_logs=1"
+      "${base_url}/api/management?include_logs=1"
     echo
     ;;
   test-notification)
@@ -37,7 +37,7 @@ case "${command}" in
       -X POST \
       -H "Authorization: Bearer ${token}" \
       -H "Content-Type: application/json" \
-      "${base_url}/api/contact-notification.php" \
+      "${base_url}/api/contact-notification" \
       -d '{"name":"API Management Test","company":"GK Works","email":"api-management-test@example.com","subject":"API management test","message":"Test notification from the API management helper.","source":"api-management-helper"}'
     echo
     ;;

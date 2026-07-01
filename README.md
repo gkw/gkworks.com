@@ -1,6 +1,6 @@
 # GK Works, Inc. Website
 
-Flask website for GK Works, Inc., California Corporation since 2012.
+Python/Flask website and API backend for GK Works, Inc., California Corporation since 2012.
 
 ## Cloudflare Worker Branch
 
@@ -66,7 +66,7 @@ SMTP_USERNAME=<gmail-address>
 SMTP_PASSWORD=<google-app-password>
 ```
 
-The PHP compatibility deployment on `gkworks.com` reads SMTP settings from `/etc/gkworks-contact-mail.ini`:
+The Python API deployment reads SMTP settings from environment variables. The production helper can also write shared server settings to `/etc/gkworks-contact-mail.ini`:
 
 ```ini
 smtp_host=smtp.gmail.com
@@ -82,14 +82,20 @@ The helper script can be uploaded to the production server and run as root:
 /root/setup-gmail-smtp.sh genkikuroda@gmail.com
 ```
 
-## HTTP Email Notification API
+## Python HTTP Email Notification API
 
-The production PHP compatibility deployment includes an authenticated HTTP endpoint for future Cloudflare Worker contact-form submissions:
+The Python/Flask deployment includes an authenticated HTTP endpoint for Cloudflare Worker contact-form submissions:
+
+```text
+POST /api/contact-notification
+Authorization: Bearer <notify_api_token>
+Content-Type: application/json
+```
+
+Temporary compatibility alias:
 
 ```text
 POST /api/contact-notification.php
-Authorization: Bearer <notify_api_token>
-Content-Type: application/json
 ```
 
 Example payload:
@@ -111,10 +117,10 @@ The endpoint sends notification email through the Gmail SMTP settings in `/etc/g
 /var/www/html/instance/contact_api_notifications.jsonl
 ```
 
-The Docker/Flask deployment exposes the same endpoint path and uses `CONTACT_NOTIFY_API_TOKEN` for the Bearer token:
+The Docker/Flask deployment uses `CONTACT_NOTIFY_API_TOKEN` for the Bearer token:
 
 ```bash
-curl -sS -X POST http://127.0.0.1:8099/api/contact-notification.php \
+curl -sS -X POST http://127.0.0.1:8099/api/contact-notification \
   -H "Authorization: Bearer dev-change-me" \
   -H "Content-Type: application/json" \
   -d '{"name":"Docker Test","email":"docker@example.com","message":"Hello","source":"docker"}'
@@ -125,15 +131,17 @@ curl -sS -X POST http://127.0.0.1:8099/api/contact-notification.php \
 Protected API catalog and runtime checks are available at:
 
 ```text
-GET /api/management.php
+GET /api/management
 Authorization: Bearer <notify_api_token>
 ```
 
-Registered APIs are listed in:
+Temporary compatibility alias:
 
 ```text
-api/api-catalog.php
+GET /api/management.php
 ```
+
+The historical PHP compatibility files are still under `api/` for the old VPS deployment path. New implementation work should go into `app.py`, the Worker under `worker/`, and Docker deployment files.
 
 Use the helper on the production server:
 
@@ -143,11 +151,11 @@ Use the helper on the production server:
 /root/api-management.sh test-notification
 ```
 
-When adding APIs for Cloudflare Workers, add the endpoint implementation under `api/`, add a catalog entry in `api/api-catalog.php`, and use the shared helpers in `api/lib/api-common.php`.
+When adding APIs for Cloudflare Workers, add the Python endpoint in `app.py`, add the Worker route in `worker/src/index.ts`, and update the API catalogs in both places.
 
-The Docker/Flask deployment also exposes the same management path:
+The Docker/Flask deployment exposes the management path:
 
 ```bash
-curl -sS http://127.0.0.1:8099/api/management.php \
+curl -sS http://127.0.0.1:8099/api/management \
   -H "Authorization: Bearer dev-change-me"
 ```
