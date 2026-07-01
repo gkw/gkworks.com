@@ -75,6 +75,28 @@ npx wrangler secret put ADMIN_API_TOKEN
 
 Do not commit `.dev.vars`, Gmail passwords, or API tokens.
 
+## Preview Deployment Before Domain Cutover
+
+`wrangler.jsonc` is safe for partial rollout by default. Custom domain routes for `gkworks.com` and `www.gkworks.com` are commented out, so deploys go to the Worker preview domain first:
+
+```bash
+npm run deploy
+```
+
+This lets the Worker use the existing VPS notification API while the main website remains on the current hosting:
+
+```text
+NOTIFICATION_API_URL=https://gkworks.com/api/contact-notification.php
+```
+
+When `api.gkworks.com` is ready, change `NOTIFICATION_API_URL` to:
+
+```text
+https://api.gkworks.com/api/contact-notification.php
+```
+
+Only uncomment the `routes` entries in `wrangler.jsonc` when ready to move public traffic for `gkworks.com` to Cloudflare Workers.
+
 ## Optional KV Backup
 
 Durable Objects are the primary Worker-side contact log. Optional KV backup can also be enabled by creating a namespace and adding it to `wrangler.jsonc`:
