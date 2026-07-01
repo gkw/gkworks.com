@@ -26,7 +26,7 @@
     }
   ],
   "vars": {
-    "NOTIFICATION_API_URL": "https://gkworks.com/api/contact-notification.php"
+    "NOTIFICATION_API_URL": "https://api.gkworks.com/api/contact-notification.php"
   }
   // Create a KV namespace and set the id before production deploy:
   // "kv_namespaces": [

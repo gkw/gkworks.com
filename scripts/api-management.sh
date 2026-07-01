@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-base_url="${GKWORKS_API_BASE_URL:-https://gkworks.com}"
+base_url="${GKWORKS_API_BASE_URL:-https://api.gkworks.com}"
 token="${GKWORKS_API_TOKEN:-}"
 command="${1:-list}"
 curl_opts=(-sS)

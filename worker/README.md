@@ -83,16 +83,10 @@ Do not commit `.dev.vars`, Gmail passwords, or API tokens.
 npm run deploy
 ```
 
-This lets the Worker use the existing VPS notification API while the main website remains on the current hosting:
+This lets the Worker use the existing VPS notification API through the API hostname while the main website remains on the current hosting:
 
 ```text
-NOTIFICATION_API_URL=https://gkworks.com/api/contact-notification.php
-```
-
-When `api.gkworks.com` is ready, change `NOTIFICATION_API_URL` to:
-
-```text
-https://api.gkworks.com/api/contact-notification.php
+NOTIFICATION_API_URL=https://api.gkworks.com/api/contact-notification.php
 ```
 
 Only uncomment the `routes` entries in `wrangler.jsonc` when ready to move public traffic for `gkworks.com` to Cloudflare Workers.
