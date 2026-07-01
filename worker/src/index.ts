@@ -206,6 +206,16 @@ function acceptsJson(request: Request): boolean {
   return (request.headers.get("accept") || "").includes("application/json");
 }
 
+function canonicalRedirect(url: URL): Response | null {
+  if (url.hostname !== "gk-works.com" && url.hostname !== "www.gk-works.com") {
+    return null;
+  }
+
+  url.hostname = "gkworks.com";
+  url.protocol = "https:";
+  return Response.redirect(url.toString(), 301);
+}
+
 function contactStateStub(env: Env, date = new Date()): DurableObjectStub<ApiState> {
   const month = date.toISOString().slice(0, 7);
   return env.API_STATE.getByName(`contacts-${month}`);
@@ -437,6 +447,10 @@ async function handleManagement(request: Request, env: Env): Promise<Response> {
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
+    const redirect = canonicalRedirect(url);
+    if (redirect) {
+      return redirect;
+    }
 
     if (request.method === "GET" && url.pathname === "/api/health") {
       return handleHealth(env);
