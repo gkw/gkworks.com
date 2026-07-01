@@ -3,6 +3,8 @@
   "name": "gkworks-site",
   "main": "src/index.ts",
   "compatibility_date": "2026-07-01",
+  "workers_dev": true,
+  "preview_urls": true,
   "assets": {
     "directory": "./public",
     "binding": "ASSETS"
@@ -27,14 +29,13 @@
   ],
   "vars": {
     "NOTIFICATION_API_URL": "https://api.gkworks.com/api/contact-notification"
-  }
+  },
   // Create a KV namespace and set the id before production deploy:
   // "kv_namespaces": [
   //   { "binding": "CONTACT_SUBMISSIONS", "id": "<KV_NAMESPACE_ID>" }
   // ]
-  // Add custom domain routes only when ready to cut over:
-  // "routes": [
-  //   { "pattern": "gkworks.com", "custom_domain": true },
-  //   { "pattern": "www.gkworks.com", "custom_domain": true }
-  // ]
+  "routes": [
+    { "pattern": "gkworks.com/*", "zone_name": "gkworks.com" },
+    { "pattern": "www.gkworks.com/*", "zone_name": "gkworks.com" }
+  ]
 }
